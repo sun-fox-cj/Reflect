@@ -28,7 +28,7 @@ class ReflectType {
     
     var realType: RealType = .None
     
-    private var propertyMirrorType: Mirror
+    fileprivate var propertyMirrorType: Mirror
 
     init(propertyMirrorType: Mirror, belongType: Any.Type){
         
@@ -68,9 +68,9 @@ extension ReflectType{
 
         displayStyle = propertyMirrorType.displayStyle
         
-        if displayStyle == nil && basicTypes.contains(typeName) {displayStyle = .Struct}
+        if displayStyle == nil && basicTypes.contains(typeName) {displayStyle = .struct}
         
-        if extraTypes.contains(typeName) {displayStyle = .Struct}
+        if extraTypes.contains(typeName) {displayStyle = .struct}
         
         guard displayStyle != nil else {fatalError("[Charlin Feng]: DisplayStyle Must Have Value")}
     }
@@ -81,11 +81,11 @@ extension ReflectType{
 
         switch displayStyle! {
             
-            case .Struct: displayStyleDesc = "Struct"
-            case .Class: displayStyleDesc = "Class"
-            case .Optional: displayStyleDesc = "Optional"; isOptional = true;
-            case .Enum: displayStyleDesc = "Enum"
-            case .Tuple: displayStyleDesc = "Tuple"
+            case .struct: displayStyleDesc = "Struct"
+            case .class: displayStyleDesc = "Class"
+            case .optional: displayStyleDesc = "Optional"; isOptional = true;
+            case .enum: displayStyleDesc = "Enum"
+            case .tuple: displayStyleDesc = "Tuple"
             default: displayStyleDesc = "Other: Collection/Dictionary/Set"
 
         }
@@ -147,13 +147,13 @@ extension ReflectType{
         }
     }
     
-    class func makeClass(type: ReflectType) -> AnyClass {
+    class func makeClass(_ type: ReflectType) -> AnyClass {
         
         let arrayString = type.typeName
         
-        let clsString = arrayString.replacingOccurrencesOfString("Array<", withString: "").replacingOccurrencesOfString("Optional<", withString: "").replacingOccurrencesOfString(">", withString: "")
+        let clsString = arrayString?.replacingOccurrencesOfString("Array<", withString: "").replacingOccurrencesOfString("Optional<", withString: "").replacingOccurrencesOfString(">", withString: "")
         
-        var cls: AnyClass? = ClassFromString(clsString)
+        var cls: AnyClass? = ClassFromString(clsString!)
         
         if cls == nil && type.isReflect {
             

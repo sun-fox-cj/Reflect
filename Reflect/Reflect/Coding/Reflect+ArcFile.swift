@@ -12,7 +12,7 @@ import Foundation
 extension Reflect{
     
 
-    class func save(obj obj: AnyObject! , name: String!) -> String{
+    class func save(obj: AnyObject! , name: String!) -> String{
         
         if obj is [AnyObject]{assert(name != nil, "[Charlin Feng]: Name can't be empty when you Archive an array!")}
         
@@ -25,17 +25,17 @@ extension Reflect{
         return path
     }
     
-    class func read(name name: String!) -> AnyObject?{
+    class func read(name: String!) -> AnyObject?{
         
         let path = pathWithName(obj: self.init(), name: name)
         
-        return NSKeyedUnarchiver.unarchiveObjectWithFile(path)
+        return NSKeyedUnarchiver.unarchiveObject(withFile: path) as AnyObject?
     }
     
-    class func delete(name name: String!){save(obj: nil, name: name)}
+    class func delete(name: String!){save(obj: nil, name: name)}
     
     
-    static func pathWithName(obj obj: AnyObject, name: String!) -> String{
+    static func pathWithName(obj: AnyObject, name: String!) -> String{
         
         let fileName = name ?? Mirror(reflecting: obj).description
         
@@ -47,7 +47,7 @@ extension Reflect{
 
     class ArcFile {
 
-        static var cachesFolder: String? {return NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true).last}
+        static var cachesFolder: String? {return NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last}
     }
     
     func ignoreCodingPropertiesForCoding() -> [String]? {return nil}

@@ -8,7 +8,7 @@
 
 import Foundation
 
-let Student5Dict = ["name": "jack", "age": 28,"items1": ["a1","b1","c1"],"items2": ["a2","b2","c2"],"bags": [["color": "red","price": 12.5],["color": "blue","price": 15]]]
+let Student5Dict = ["name": "jack", "age": 28,"items1": ["a1","b1","c1"],"items2": ["a2","b2","c2"],"bags": [["color": "red","price": 12.5],["color": "blue","price": 15]]] as [String : Any]
 
 
 /**  主要测试：隐式可选，事实表明，直接可用  */
@@ -23,7 +23,7 @@ class Student5: Reflect {
     
     class func parse(){
         
-        let stu5 = Student5.parse(dict: Student5Dict)
+        let stu5 = Student5.parse(dict: Student5Dict as NSDictionary)
 
         print(stu5)
     }

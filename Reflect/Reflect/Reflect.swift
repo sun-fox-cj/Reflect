@@ -31,16 +31,16 @@ class Reflect: NSObject, NSCoding{
                 
                 if !ignore {
                 
-                    self.setValue(aDecoder.decodeObjectForKey(name), forKeyPath: name)
+                    self.setValue(aDecoder.decodeObject(forKey: name), forKeyPath: name)
                 }
             }else{
-                self.setValue(aDecoder.decodeObjectForKey(name), forKeyPath: name)
+                self.setValue(aDecoder.decodeObject(forKey: name), forKeyPath: name)
             }
         }
     }
     
     
-    func encodeWithCoder(aCoder: NSCoder) {
+    func encode(with aCoder: NSCoder) {
         
         let ignorePropertiesForCoding = self.ignoreCodingPropertiesForCoding()
         
@@ -54,10 +54,10 @@ class Reflect: NSObject, NSCoding{
                 
                 if !ignore {
                     
-                    aCoder.encodeObject(value as? AnyObject, forKey: name)
+                    aCoder.encode(value as? AnyObject, forKey: name)
                 }
             }else{
-                aCoder.encodeObject(value as? AnyObject, forKey: name)
+                aCoder.encode(value as? AnyObject, forKey: name)
             }
             
         }

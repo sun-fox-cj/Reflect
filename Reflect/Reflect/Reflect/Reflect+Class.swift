@@ -10,11 +10,11 @@ import Foundation
 
 extension Reflect{static var classNameOfString: String {return "\(self)"}}
 
-func ClassFromString(str: String) -> AnyClass!{
+func ClassFromString(_ str: String) -> AnyClass!{
 
-    if  var appName = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleName") as? String {
+    if  var appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String {
         
-        if appName == "" {appName = ((NSBundle.mainBundle().bundleIdentifier!).characters.split{$0 == "."}.map { String($0) }).last ?? ""}
+        if appName == "" {appName = ((Bundle.main.bundleIdentifier!).characters.split{$0 == "."}.map { String($0) }).last ?? ""}
         
         var clsStr = str
         
@@ -32,7 +32,7 @@ func ClassFromString(str: String) -> AnyClass!{
             
             var nameStringM = "_TtC" + "C".repeatTimes(num - 2)
             
-            for (_, s): (Int, String) in strArr.enumerate(){
+            for (_, s): (Int, String) in strArr.enumerated(){
                 
                 nameStringM += "\(s.characters.count)\(s)"
             }

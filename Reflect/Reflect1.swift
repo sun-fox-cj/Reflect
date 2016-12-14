@@ -21,7 +21,7 @@ class Person: Reflect {
     var v6: Double
     var v7: NSNumber
     var v8: UIImage
-    var v9: NSData!
+    var v9: Data!
     var v10: Bool
     var v11: Bool?
     var v12: Bool!
@@ -42,7 +42,7 @@ class Person: Reflect {
         v6=0
         v7=0
         v8 = UIImage()
-        v9=NSData()
+        v9=Data()
         v10 = false
         v13 = NSArray()
         v14 = []

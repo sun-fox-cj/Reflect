@@ -11,9 +11,9 @@ import Foundation
 
 extension Reflect{
     
-    class func parsePlist(name: String) -> Self?{
+    class func parsePlist(_ name: String) -> Self?{
     
-        let path = NSBundle.mainBundle().pathForResource(name+".plist", ofType: nil)
+        let path = Bundle.main.path(forResource: name+".plist", ofType: nil)
         
         if path == nil {return nil}
         
@@ -24,11 +24,11 @@ extension Reflect{
         return parse(dict: dict!)
     }
     
-    class func parses(arr arr: NSArray) -> [Reflect]{
+    class func parses(arr: NSArray) -> [Reflect]{
         
         var models: [Reflect] = []
         
-        for (_ , dict) in arr.enumerate(){
+        for (_ , dict) in arr.enumerated(){
             
             let model = self.parse(dict: dict as! NSDictionary)
             
@@ -39,7 +39,7 @@ extension Reflect{
     }
     
     
-    class func parse(dict dict: NSDictionary) -> Self{
+    class func parse(dict: NSDictionary) -> Self{
         
         let model = self.init()
         
@@ -73,7 +73,7 @@ extension Reflect{
                     
                     if let res = type.isAggregate(){
                         
-                        var arrAggregate = []
+                        var arrAggregate = [Any]()
         
                         if res is Int.Type {
                             arrAggregate = parseAggregateArray(dict[key] as! NSArray, basicType: ReflectType.BasicType.Int, ins: 0)
@@ -99,7 +99,7 @@ extension Reflect{
                         
                         var arrM: [Reflect] = []
                         
-                        for (_, value) in dictKeyArr.enumerate() {
+                        for (_, value) in dictKeyArr.enumerated() {
                             
                             let elementModel = elementModelType.parse(dict: value as! NSDictionary)
                             
@@ -117,13 +117,13 @@ extension Reflect{
     }
     
     
-    class func parseAggregateArray<T>(arrDict: NSArray,basicType: ReflectType.BasicType, ins: T) -> [T]{
+    class func parseAggregateArray<T>(_ arrDict: NSArray,basicType: ReflectType.BasicType, ins: T) -> [T]{
         
         var intArrM: [T] = []
         
         if arrDict.count == 0 {return intArrM}
         
-        for (_, value) in arrDict.enumerate() {
+        for (_, value) in arrDict.enumerated() {
             
             var element: T = ins
             
@@ -136,7 +136,7 @@ extension Reflect{
             }
             else if T.self is Float.Type {element = v.floatValue as! T}
             else if T.self is Double.Type {element = v.doubleValue as! T}
-            else if T.self is NSNumber.Type {element = NSNumber(double: v.doubleValue!) as! T}
+            else if T.self is NSNumber.Type {element = NSNumber(value: v.doubleValue! as Double) as! T}
             else{element = value as! T}
 
             
